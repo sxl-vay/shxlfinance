@@ -93,6 +93,9 @@ public class BookkeepingBook implements Serializable {
     @TotalAdd
     private BigDecimal transferPayment;
 
+    /**
+     * 信用卡未还
+     */
     @TotalSubtract
     private BigDecimal creditCardArrears;
 

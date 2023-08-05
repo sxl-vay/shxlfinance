@@ -17,7 +17,7 @@ import com.yupi.springbootinit.model.vo.echart.PieChartItemVO;
 import com.yupi.springbootinit.service.BookkeepingService;
 import com.yupi.springbootinit.utils.SqlUtils;
 import com.yupi.springbootinit.utils.TimeUtils;
-import com.yupi.springbootinit.utils.Utils;
+import com.yupi.springbootinit.utils.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -142,13 +142,14 @@ public class BookkeepingServiceImpl extends ServiceImpl<BookkeepingBookMapper, B
             TotalSubtract totalSubtract = field.getAnnotation(TotalSubtract.class);
             try {
                 if (totalAdd != null) {
-                    Method method = bookModal.getClass().getMethod("get" + Utils.captureName(field.getName()));
+                    Method method = bookModal.getClass().getMethod("get" + Util.captureName(field.getName()));
                     BigDecimal number = (BigDecimal) method.invoke(bookModal);
                     total = total.add(number);
                 }
                 if (totalSubtract != null) {
-                    Method method = bookModal.getClass().getMethod("get" + Utils.captureName(field.getName()));
+                    Method method = bookModal.getClass().getMethod("get" + Util.captureName(field.getName()));
                     BigDecimal number = (BigDecimal) method.invoke(bookModal);
+                    if (number == null) continue;
                     total = total.subtract(number);
                 }
 
@@ -182,7 +183,7 @@ public class BookkeepingServiceImpl extends ServiceImpl<BookkeepingBookMapper, B
             Method[] methods = bookClass.getMethods();
             for (BookkeepingTypeEnum typeEnum : BookkeepingTypeEnum.values()) {
                 try {
-                    Method method = bookClass.getMethod("get" + Utils.captureName(typeEnum.name()));
+                    Method method = bookClass.getMethod("get" + Util.captureName(typeEnum.name()));
                     BigDecimal invoke = (BigDecimal) method.invoke(bookkeepingBookVO);
                     itemVOS.add(new PieChartItemVO(invoke, typeEnum.getDes()));
                 } catch (NoSuchMethodException e) {
@@ -211,14 +212,14 @@ public class BookkeepingServiceImpl extends ServiceImpl<BookkeepingBookMapper, B
             Class bookClass = bookkeepingBookVO.getClass();
             for (BookkeepingTypeEnum typeEnum : BookkeepingTypeEnum.values()) {
                 try {
-                    Method method = bookClass.getMethod("get" + Utils.captureName(typeEnum.name()));
-                    BigDecimal invoke = (BigDecimal) method.invoke(bookkeepingBookVO);
+                    Method method = bookClass.getMethod("get" + Util.captureName(typeEnum.name()));
+                    BigDecimal number = (BigDecimal) method.invoke(bookkeepingBookVO);
                     FundTypeEnum fundTypeEnum = typeEnum.getTypeEnum();
                     if (fundTypeMap.get(fundTypeEnum) == null) {
-                        fundTypeMap.put(fundTypeEnum, invoke);
+                        fundTypeMap.put(fundTypeEnum, number);
                     } else {
                         BigDecimal data = fundTypeMap.get(fundTypeEnum);
-                        fundTypeMap.put(fundTypeEnum, invoke.add(data));
+                        fundTypeMap.put(fundTypeEnum, number.add(data));
                     }
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);

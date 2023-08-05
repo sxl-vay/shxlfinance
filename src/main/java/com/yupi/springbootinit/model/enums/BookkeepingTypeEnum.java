@@ -1,5 +1,8 @@
 package com.yupi.springbootinit.model.enums;
 
+/**
+ * 定义主要资金渠道
+ */
 public enum BookkeepingTypeEnum {
     zfbYue("支付宝余额",FundTypeEnum.flexible),
     zfbFund("余额宝",FundTypeEnum.flexible),

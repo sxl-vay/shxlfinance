@@ -59,12 +59,22 @@ public class EchartsController {
         return ResultUtils.success(lineChartVO);
     }
 
+    /**
+     * 资金种类占比
+     * @param request
+     * @return
+     */
     @GetMapping("/pieChart")
     public BaseResponse<List<PieChartItemVO>> getPieChart(HttpServletRequest request) {
         User loginUser = userService.getLoginUser(request);
         return ResultUtils.success(bookkeepingService.getLastDetails(loginUser.getId()));
     }
 
+    /**
+     * 资金类型占比
+     * @param request
+     * @return
+     */
     @GetMapping("/pieTypeChart")
     public BaseResponse<List<PieChartItemVO>> getPieTypeChart(HttpServletRequest request) {
         User loginUser = userService.getLoginUser(request);

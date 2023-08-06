@@ -62,11 +62,6 @@ public class Util {
         }
     }
 
-    public static List<String> splitString2List(String input, String delim) {
-        return splitString2List(input, delim, -1);
-    }
-
-
     public static double getDoubleValue(String v) {
         return getDoubleValue(v, -1.0);
     }

@@ -17,9 +17,11 @@
 
 
 
-create database myapp;
+create
+database myapp;
 
-use myapp;
+use
+myapp;
 
 
 --
@@ -44,7 +46,7 @@ CREATE TABLE `user`
     `updateTime`   datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `isDelete`     tinyint                                 NOT NULL DEFAULT '0' COMMENT '是否删除',
     PRIMARY KEY (`id`),
-    KEY `idx_unionId` (`unionId`)
+    KEY            `idx_unionId` (`unionId`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1643945886948028418
   DEFAULT CHARSET = utf8mb4
@@ -56,7 +58,7 @@ CREATE TABLE `user`
 --
 
 LOCK
-    TABLES `user` WRITE;
+TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user`
     DISABLE KEYS */;
 INSERT INTO `user`
@@ -65,7 +67,7 @@ VALUES (1643945886948028417, 'shxl', 'b0dd3697a192885d7c055db46155b26a', NULL, N
 /*!40000 ALTER TABLE `user`
     ENABLE KEYS */;
 UNLOCK
-    TABLES;
+TABLES;
 
 --
 -- Dumping routines for database 'yuapi'
@@ -101,4 +103,18 @@ create table bookkeeping_book
     merchantsBank     decimal(18, 4)    default 0,
     transferPayment   decimal(18, 4)    default 0,
     creditCardArrears decimal(18, 4)    default 0
-)
+);
+
+create table deposit_info
+(
+    `id`         bigint   NOT NULL primary key AUTO_INCREMENT COMMENT 'id',
+    `userId`     bigint   NOT NULL,
+    `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `startTime`  datetime NOT NULL COMMENT '存款时间',
+    `endTime`    datetime NOT NULL COMMENT '到期时间',
+    tips         text COMMENT '备注 ',
+    amount       decimal(18, 4)    default 0,
+    `deleteType` tinyint  NOT NULL DEFAULT '0' COMMENT '是否删除',
+    cardType     int      NOT NULL,
+    remindType   int      NOT NULL
+);

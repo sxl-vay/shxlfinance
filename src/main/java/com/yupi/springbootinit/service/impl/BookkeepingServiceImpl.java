@@ -34,7 +34,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class BookkeepingServiceImpl extends ServiceImpl<BookkeepingBookMapper, BookkeepingBook> implements BookkeepingService {
+public class BookkeepingServiceImpl extends ServiceImpl<BookkeepingBookMapper, BookkeepingBook>
+        implements BookkeepingService {
     @Resource
     private BookkeepingBookMapper bookMapper;
 

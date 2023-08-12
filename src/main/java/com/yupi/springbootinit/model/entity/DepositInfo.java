@@ -55,7 +55,7 @@ public class DepositInfo implements Serializable {
     /**
      * 
      */
-    private Integer cardType;
+    private Long cardType;
 
     /**
      * 

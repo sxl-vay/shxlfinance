@@ -51,6 +51,7 @@ public class DepositInfoController {
         DepositInfoVO depositInfoVO = new DepositInfoVO();
         DepositInfo depositInfo = service.insertDepositInfo(addRequest,loginUser.getId());
         BeanUtils.copyProperties(depositInfo,depositInfoVO);
+
         return ResultUtils.success(depositInfoVO);
 
     }
@@ -71,8 +72,7 @@ public class DepositInfoController {
      */
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteDepositInfoInfo(@RequestBody DeleteRequest deleteRequest, HttpServletRequest request) {
-
-        return ResultUtils.success(false);
+        return ResultUtils.success(service.removeById(deleteRequest.getId()));
     }
 
     /**

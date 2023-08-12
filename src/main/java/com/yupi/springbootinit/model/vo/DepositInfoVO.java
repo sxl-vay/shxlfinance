@@ -47,7 +47,7 @@ public class DepositInfoVO implements Serializable {
     /**
      *
      */
-    private Integer cardType;
+    private String cardType;
 
 
 

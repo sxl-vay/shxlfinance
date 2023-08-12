@@ -32,7 +32,7 @@ public class DepositInfoAddRequest implements Serializable {
     /**
      *
      */
-    private Integer cardType;
+    private Long cardType;
 
     /**
      *

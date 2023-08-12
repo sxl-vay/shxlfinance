@@ -2,6 +2,7 @@ package com.yupi.springbootinit.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yupi.springbootinit.mapper.CardInfoMapper;
 import com.yupi.springbootinit.mapper.DepositInfoMapper;
 import com.yupi.springbootinit.model.dto.deposit.DepositInfoAddRequest;
 import com.yupi.springbootinit.model.dto.deposit.DepositInfoQueryRequest;
@@ -35,6 +36,9 @@ public class DepositInfoServiceImpl extends ServiceImpl<DepositInfoMapper, Depos
 
     @Resource
     private DepositInfoMapper mapper;
+
+    @Resource
+    private CardInfoMapper cardInfoMapper;
     @Override
     public DepositInfo insertDepositInfo(DepositInfoAddRequest depositInfoAddRequest, Long userid) {
         DepositInfo depositInfo = new DepositInfo();
@@ -79,6 +83,7 @@ public class DepositInfoServiceImpl extends ServiceImpl<DepositInfoMapper, Depos
         }
         DepositInfoVO depositInfoVO = new DepositInfoVO();
         BeanUtils.copyProperties(depositInfo, depositInfoVO);
+        depositInfoVO.setCardType(cardInfoMapper.selectById(depositInfo.getCardType()).getCardName());
         return depositInfoVO;
     }
 

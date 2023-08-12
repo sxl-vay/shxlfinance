@@ -27,6 +27,8 @@ public class PageRequest {
      */
     private String sortField;
 
+    private Long id;
+
     /**
      * 排序顺序（默认升序）
      */

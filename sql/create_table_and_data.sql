@@ -118,3 +118,15 @@ create table deposit_info
     cardType     int      NOT NULL,
     remindType   int      NOT NULL
 );
+
+
+
+create table card_info
+(
+    `id`         bigint   NOT NULL primary key AUTO_INCREMENT COMMENT 'id',
+    `userId`     bigint   NOT NULL comment '用户id' default -1,
+    cardName     varchar(64) NOT NULL comment '卡名称',
+    cardType     varchar(32) NOT NULL comment '卡类型',
+    cardNumber     varchar(32) NOT NULL comment '卡号'
+
+)

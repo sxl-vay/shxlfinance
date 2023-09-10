@@ -87,6 +87,11 @@ public class BookkeepingBookVO implements Serializable {
     private BigDecimal total;
 
     /**
+     * 扣除转移支付合集
+     */
+    private BigDecimal pureTotal;
+
+    /**
      * 转移支付
      */
     private BigDecimal transferPayment;

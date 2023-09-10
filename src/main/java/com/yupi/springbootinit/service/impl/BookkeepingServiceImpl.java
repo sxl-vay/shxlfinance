@@ -110,6 +110,7 @@ public class BookkeepingServiceImpl extends ServiceImpl<BookkeepingBookMapper, B
         BookkeepingBookVO bookkeepingBookVO = new BookkeepingBookVO();
         BeanUtils.copyProperties(bookkeepingBook, bookkeepingBookVO);
         BigDecimal total = getTotal(bookkeepingBook);
+        bookkeepingBookVO.setPureTotal(total.subtract(bookkeepingBook.getTransferPayment()));
         bookkeepingBookVO.setTotal(total);
         return bookkeepingBookVO;
     }

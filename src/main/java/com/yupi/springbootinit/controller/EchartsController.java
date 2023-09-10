@@ -7,6 +7,7 @@ import com.yupi.springbootinit.model.entity.User;
 import com.yupi.springbootinit.model.vo.BookkeepingBookVO;
 import com.yupi.springbootinit.model.vo.echart.LineChartVO;
 import com.yupi.springbootinit.model.vo.echart.PieChartItemVO;
+import com.yupi.springbootinit.model.vo.echart.TotalCountLineVO;
 import com.yupi.springbootinit.service.BookkeepingService;
 import com.yupi.springbootinit.service.UserService;
 import com.yupi.springbootinit.utils.TimeUtils;
@@ -32,6 +33,7 @@ public class EchartsController {
     private BookkeepingService bookkeepingService;
     @Resource
     private UserService userService;
+
     @GetMapping("/lineChart")
     public BaseResponse<LineChartVO> getLineChart(HttpServletRequest request) {
         //获取折线图信息，这里需要优化，将逻辑写入到service层
@@ -48,19 +50,20 @@ public class EchartsController {
         List<String> times = new ArrayList<>();
         List<BigDecimal> totals = new ArrayList<>();
         SimpleDateFormat simpleDateFormat = TimeUtils.getSimpleDateFormat();
-        bookkeepingBookVOS.stream().forEach(s->{
+        bookkeepingBookVOS.stream().forEach(s -> {
             Date createTime = s.getCreateTime();
             String time = simpleDateFormat.format(createTime);
             times.add(time);
             BigDecimal total = bookkeepingService.getTotal(s);
             totals.add(total);
         });
-        LineChartVO lineChartVO = new LineChartVO(times,totals);
+        LineChartVO lineChartVO = new LineChartVO(times, totals);
         return ResultUtils.success(lineChartVO);
     }
 
     /**
      * 资金种类占比
+     *
      * @param request
      * @return
      */
@@ -72,6 +75,7 @@ public class EchartsController {
 
     /**
      * 资金类型占比
+     *
      * @param request
      * @return
      */
@@ -81,6 +85,35 @@ public class EchartsController {
         return ResultUtils.success(bookkeepingService.getLastTypeDetails(loginUser.getId()));
     }
 
+    @GetMapping("/totalLine")
+    public BaseResponse<List<TotalCountLineVO>> getTotalCountLine(HttpServletRequest request) {
+        //获取折线图信息，这里需要优化，将逻辑写入到service层
+        User loginUser = userService.getLoginUser(request);
+        BookkeepingQueryRequest queryRequest = new BookkeepingQueryRequest();
+        LocalDate today = LocalDate.now();
+        LocalDate previousYear = today.minus(3, ChronoUnit.MONTHS);
+        Date date = Date.from(previousYear.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        SimpleDateFormat sft = new SimpleDateFormat("YYYY-MM");
+        String startTime = sft.format(date);
+        queryRequest.setStartTime(startTime);
+        queryRequest.setUserId(loginUser.getId());
+        List<BookkeepingBookVO> bookkeepingBookVOS = bookkeepingService.selectByQueryRequest(queryRequest);
+        List<String> times = new ArrayList<>();
+        List<BigDecimal> totals = new ArrayList<>();
+        SimpleDateFormat simpleDateFormat = TimeUtils.getSimpleDateFormat();
+        List<TotalCountLineVO> lineVOS = new ArrayList<>();
+        bookkeepingBookVOS.stream().forEach(s -> {
+            TotalCountLineVO countLineVO = new TotalCountLineVO();
+            BigDecimal total = s.getTotal();
+            countLineVO.setTotal(total);
+            countLineVO.setPureTotal(total.subtract(s.getTransferPayment()));
+            countLineVO.setTime(simpleDateFormat.format(s.getCreateTime()));
+            lineVOS.add(countLineVO);
+        });
+
+        return ResultUtils.success(lineVOS);
+
+    }
 
 }
 

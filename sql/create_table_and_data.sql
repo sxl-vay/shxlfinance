@@ -45,6 +45,8 @@ CREATE TABLE `user`
     `createTime`   datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updateTime`   datetime                                NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `isDelete`     tinyint                                 NOT NULL DEFAULT '0' COMMENT '是否删除',
+    `eMail`        varchar(32)                             NOT NULL COMMENT '电子邮箱',
+    `phoneNumber`  varchar(11)                             NOT NULL COMMENT '手机号码',
     PRIMARY KEY (`id`),
     KEY            `idx_unionId` (`unionId`)
 ) ENGINE = InnoDB
@@ -123,10 +125,10 @@ create table deposit_info
 
 create table card_info
 (
-    `id`         bigint   NOT NULL primary key AUTO_INCREMENT COMMENT 'id',
-    `userId`     bigint   NOT NULL comment '用户id' default -1,
-    cardName     varchar(64) NOT NULL comment '卡名称',
-    cardType     varchar(32) NOT NULL comment '卡类型',
-    cardNumber     varchar(32) NOT NULL comment '卡号'
+    `id`       bigint      NOT NULL primary key AUTO_INCREMENT COMMENT 'id',
+    `userId`   bigint      NOT NULL comment '用户id' default -1,
+    cardName   varchar(64) NOT NULL comment '卡名称',
+    cardType   varchar(32) NOT NULL comment '卡类型',
+    cardNumber varchar(32) NOT NULL comment '卡号'
 
 )

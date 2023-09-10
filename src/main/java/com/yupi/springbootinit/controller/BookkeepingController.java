@@ -61,7 +61,6 @@ public class BookkeepingController {
         BookkeepingQueryRequest queryRequest = new BookkeepingQueryRequest();
         User loginUser = userService.getLoginUser(request);
         queryRequest.setUserId(loginUser.getId());
-        long size = pageSize;
         // 限制爬虫
         //ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<BookkeepingBook> page = service.page(new Page<>(current, pageSize)

@@ -90,7 +90,7 @@ public class BookkeepingBook implements Serializable {
     /**
      * 转移支付
      */
-    @TotalAdd
+    //@TotalAdd
     private BigDecimal transferPayment;
 
     /**

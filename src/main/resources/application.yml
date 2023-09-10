@@ -40,6 +40,15 @@ spring:
     multipart:
       # 大小限制
       max-file-size: 10MB
+  #配置邮件
+  #网易邮箱token
+  mail:
+    host: smtp.163.com
+    port: 25
+    username: shixianglian2000@163.com
+    #  配置密码，注意是开启POP3/SMTP的授权密码(根据自己的授权密码填写)
+    password: NNNKCTMGRNUNLCED
+    default-encoding: UTF-8
 server:
   address: 0.0.0.0
   port: 8102

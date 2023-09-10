@@ -2,6 +2,9 @@ package com.yupi.springbootinit;
 
 import com.yupi.springbootinit.config.WxOpenConfig;
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+
+import com.yupi.springbootinit.mail.MailUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,9 +20,14 @@ class MainApplicationTests {
     @Resource
     private WxOpenConfig wxOpenConfig;
 
+    @Resource
+    private MailUtil service;
+
     @Test
     void contextLoads() {
-        System.out.println(wxOpenConfig);
+        service.sendSimpleMail("1693847306@qq.com","shxl","test");
+
+
     }
 
 }
